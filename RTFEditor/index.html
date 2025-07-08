@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTF Editor</title>
+  <meta charset="UTF-8">
+  <title>Editor Quill - Exportar RTF</title>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <style>
+    #editor-container {
+      height: 300px;
+      margin-bottom: 20px;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-    
+
+  <h2>Editor RTF com Quill.js</h2>
+
+  <div id="editor-container"></div>
+
+  <button onclick="exportAsRTF()">Exportar como RTF</button>
+
+  <!-- Scripts -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    // Inicializa o editor Quill
+    const quill = new Quill('#editor-container', {
+      theme: 'snow',
+      modules: {
+        toolbar: [['bold', 'italic', 'underline'], [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['link']]
+      }
+    });
+
+    function exportAsRTF() {
+      const text = quill.getText().replace(/\n/g, '\\par ');
+      const rtfContent = `{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Arial;}}\\f0\\fs24 ${text}}`;
+
+      const blob = new Blob([rtfContent], { type: 'application/rtf' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'documento.rtf';
+      link.click();
+    }
+  </script>
 </body>
 </html>
