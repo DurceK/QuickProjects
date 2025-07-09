@@ -9,52 +9,102 @@
       height: 300px;
       margin-bottom: 20px;
     }
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
+    }
+
+    #titlecase-button {
+      font-weight: bold;
+      font-family: Arial;
     }
   </style>
 </head>
 <body>
 
   <h2>Editor RTF com Quill.js</h2>
-  
+
+  <!-- Toolbar personalizada -->
+  <div id="toolbar">
+    <span class="ql-formats">
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+      <button class="ql-strike"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-blockquote"></button>
+      <button class="ql-code-block"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-link"></button>
+      <button class="ql-image"></button>
+      <button class="ql-video"></button>
+      <button class="ql-formula"></button>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-header">
+        <option selected></option>
+        <option value="1"></option>
+        <option value="2"></option>
+      </select>
+      <select class="ql-size">
+        <option value="small"></option>
+        <option selected></option>
+        <option value="large"></option>
+        <option value="huge"></option>
+      </select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-list" value="ordered"></button>
+      <button class="ql-list" value="bullet"></button>
+      <button class="ql-list" value="check"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-indent" value="-1"></button>
+      <button class="ql-indent" value="+1"></button>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-script" value="sub"></button>
+      <button class="ql-script" value="super"></button>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-align"></select>
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-font"></select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-clean"></button>
+    </span>
+
+    <!-- Botão customizado Aa -->
+    <span class="ql-formats">
+      <button id="titlecase-button" title="Converter para Iniciais Maiúsculas">Aa</button>
+    </span>
+  </div>
+
+  <!-- Editor -->
   <div id="editor-container"></div>
 
+  <!-- Botão para exportar RTF -->
   <button onclick="exportAsRTF()">Exportar como RTF</button>
 
   <!-- Scripts -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script>
-    // Inicializa o editor Quill
+    // Inicializa o editor com toolbar customizada
     const quill = new Quill('#editor-container', {
       theme: 'snow',
       modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-          ['blockquote', 'code-block'],
-          ['link', 'image', 'video', 'formula'],
-
-          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
-          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-          [{ 'direction': 'rtl' }],                         // text direction
-
-          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-          [{ 'font': [] }],
-          [{ 'align': [] }],
-
-          ['clean']                                         // remove formatting button
-        ]
-        
+        toolbar: '#toolbar'
       }
     });
-    
 
+    // Exporta como RTF (texto puro com quebra de linha)
     function exportAsRTF() {
       const text = quill.getText().replace(/\n/g, '\\par ');
       const rtfContent = `{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Arial;}}\\f0\\fs24 ${text}}`;
@@ -65,6 +115,16 @@
       link.download = 'documento.rtf';
       link.click();
     }
+
+    // Converte o texto para Title Case
+    document.getElementById('titlecase-button').addEventListener('click', () => {
+      const text = quill.getText();
+      const titleCased = text
+        .toLowerCase()
+        .replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1));
+
+      quill.setText(titleCased);
+    });
   </script>
 </body>
 </html>
