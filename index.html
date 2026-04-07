@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfólio - Kaique Durce</title>
+  <style>
+    /* Reset simples */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f5f5f5;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 50px;
+      color: #00adb5;
+    }
+
+    .projects-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #eeeeee;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+
+    .card a {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #00adb5;
+      color: #121212;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .card a:hover {
+      background-color: #06c2ca;
+    }
+  </style>
+</head>
+<body>
+  <h1>Portfólio - Kaique Durce</h1>
+
+  <div class="projects-container">
+    <!-- Card Projeto -->
+    <div class="card">
+      <h2>RTF Editor</h2>
+      <p>Editor de texto avançado usando Quill.js com exportação em RTF.</p>
+      <a href="projects\RTFeditor.html">Ver Projeto</a>
+    </div>
+  </div>
+
+</body>
+</html>
